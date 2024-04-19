@@ -1,5 +1,5 @@
 'use client';
-
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Form,
@@ -15,6 +15,7 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import GoogleSignInButton from '../GoogleSignInButton';
+import { useRouter } from 'next/navigation';
 
 const FormSchema = z
   .object({
@@ -32,6 +33,9 @@ const FormSchema = z
   });
 
 const SignUpForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const nextRouter = useRouter();
+  
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -42,8 +46,31 @@ const SignUpForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof FormSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+     try{
+        setIsLoading(true);
+        const response = await fetch("/api/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email: values.email,
+            username: values.username,
+            password: values.password
+          })
+        })
+
+        if(response.ok){
+          setIsLoading(false)
+          nextRouter.push('/sign-in')
+        } else {
+          alert("Registeration failed!")
+        }
+     } 
+     catch(err){
+        alert("Something went wrong while posting your details. Please try again.")
+     }
   };
 
   return (
@@ -112,15 +139,15 @@ const SignUpForm = () => {
           />
         </div>
         <Button className='w-full mt-6' type='submit'>
-          Sign up
+          { isLoading ? "Processing..." : "Sign up"}
         </Button>
       </form>
-      <div className='mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400'>
+      {/* <div className='mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400'>
         or
-      </div>
-      <GoogleSignInButton>Sign up with Google</GoogleSignInButton>
+      </div> */}
+      {/* <GoogleSignInButton>Sign up with Google</GoogleSignInButton> */}
       <p className='text-center text-sm text-gray-600 mt-2'>
-        If you don&apos;t have an account, please&nbsp;
+        Don&apos;t have an account? Please&nbsp;
         <Link className='text-blue-500 hover:underline' href='/sign-in'>
           Sign in
         </Link>

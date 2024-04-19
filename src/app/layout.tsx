@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import StoreProvider from './StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <main className='h-screen flex flex-col justify-center items-center'>
           <Navbar />
-          {children}
+          <StoreProvider>{children}</StoreProvider>
         </main>
       </body>
     </html>
