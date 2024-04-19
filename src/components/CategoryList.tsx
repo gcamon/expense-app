@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Row, Col, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { selectCategories } from "@/app/slices/categorySlice";
+import { selectCategories, selectExpenses } from "@/app/slices/categorySlice";
 import { selectCategory, selectType } from "@/app/slices/categorySlice";
 
 const CategoryList = () => {
@@ -16,7 +16,7 @@ const CategoryList = () => {
   const category = useSelector(selectCategory);
   const typeOfForm = useSelector(selectType);
 
-  const expenses = [{id:null, amount: "", description:"", category: "", isEdit: ""}]
+  const expenses = useSelector(selectExpenses)
   
 
   return (
