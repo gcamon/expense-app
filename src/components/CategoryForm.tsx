@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import {
@@ -21,7 +20,7 @@ import { selectType, setCategories, setCategory, setType } from "@/app/slices/ca
 
 
 const CategoryForm = () => {
-    
+
 const [isLoading, setIsLoading] = useState(false);
 
 const dispatch = useDispatch();
