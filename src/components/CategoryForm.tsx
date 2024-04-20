@@ -80,12 +80,12 @@ useEffect(() => {
           alert("Error occured while fetching categories")
         }
 
-        dispatch(setType('Category'))
+        //dispatch(setType('Category'))
     }
 
     getCategories();
     
-}, [dispatch])
+}, [])
 
 
 
@@ -253,7 +253,7 @@ const handleChange = async (id: any) => {
                   <FormLabel>Category</FormLabel>
                   <FormSelect onChange={(e) => handleChange(e.target.value)}>
                     { cates.map((category: any) => (
-                      <option id={category.id} value={category.id} className="text-blue">{category.title}</option>
+                      <option id={category.id} key={category.id} value={category.id} className="text-blue">{category.title}</option>
                     ))
                     }
                   </FormSelect>
