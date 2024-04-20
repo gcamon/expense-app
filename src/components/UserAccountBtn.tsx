@@ -3,7 +3,7 @@ import React from 'react'
 import { signOut } from 'next-auth/react';
 import { Button } from './ui/button';
 
-const UserAccountBtn = async () => {
+const UserAccountBtn = () => {
   return (
     <Button variant='destructive' onClick={() => signOut({
         redirect: true,

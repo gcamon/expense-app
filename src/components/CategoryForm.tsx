@@ -79,11 +79,14 @@ useEffect(() => {
         } catch(err) {
           alert("Error occured while fetching categories")
         }
+
+        dispatch(setType('Category'))
     }
 
     getCategories();
-    dispatch(setType('Category'))
-}, [])
+    
+}, [dispatch])
+
 
 
 const onSubmit = async (values: z.infer<typeof FormSchema>) => {
@@ -138,7 +141,8 @@ const onSubmit = async (values: z.infer<typeof FormSchema>) => {
 
 const handleChange = async (id: any) => {
     try{
-      const categoryExpenses = await fetch(`/api/expenses/?id=${id}`)
+      const url = `/api/expenses/?id=${id}`;
+      const categoryExpenses = await fetch(url)
       const data = await categoryExpenses.json();
       console.log(data)
       return;

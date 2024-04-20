@@ -7,7 +7,7 @@ export const GET = async (req) => {
     try{        
         
         //const session = await getServerSession(authOptions);
-        console.log(req.query)
+        console.log(req.query.id)
         const expenses = await db.expenses.findMany({
             where: {categoryId: req.query.id}
         })
